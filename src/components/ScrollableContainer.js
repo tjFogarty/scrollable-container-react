@@ -37,6 +37,14 @@ export default class ScrollableContainer extends PureComponent {
     )
   }
 
+  componentWillUnmount() {
+    this.container.removeEventListener(
+      'scroll',
+      this.debounceCheckForScrollPosition
+    )
+    this.debounceCheckForOverflow.cancel()
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.items.length !== this.state.items.length) {
       this.checkForOverflow()
